@@ -24,15 +24,16 @@ class Question(models.Model):
         """Returns the choice object with the most votes."""
         choice_list = list(self.choice_set.all())
 
-        max_choice = max(choice_list.key=attrgetter('votes'))
+        max_choice = max(choice_list,key=attrgetter('votes'))
 
         return max_choice
 
     def get_leading_choice_pct(self):
         """Returns the percentage of votes for the leading choice."""
         total_votes = 0.0
+
         for choice in self.get_choices():
-            total_votes += votes
+            total_votes += choice.votes
         
         leader = self.get_leading_choice()
         return leader.votes / total_votes
